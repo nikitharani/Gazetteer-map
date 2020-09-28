@@ -1,0 +1,13 @@
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+  }
+
+  #mapid{
+    width: 1200px; 
+    height: 600px
+  }
+  body{
+    margin:0px;
+  }
