@@ -26,7 +26,7 @@
 	// }
 
     // mymap.on('click', onMapClick);
-    var lat=0, long=0;
+    var lat=0, long=0, country_name='India';
 
     //current location 
     
@@ -38,8 +38,10 @@
             long = position.coords.longitude;
             console.log( lat);
             console.log( long);
+            reverseGeocodingWithGoogle(lat, long);
+            console.log(country_name);
             mymap.setView([lat, long], 13);
-            mymap.marker([lat, long]);
+            // mymap.marker([lat, long]);
         });
         
     } else{
@@ -49,8 +51,41 @@
         //making a map and tiles
         console.log( lat);
         console.log( long);
+
+
+
+        
         
     var mymap = L.map('mapid').setView([lat, long], 13);   
+    
+    function applyCountryBorder(map, countryname) {
+        jQuery
+          .ajax({
+            type: "GET",
+            dataType: "json",
+            url:
+              "https://nominatim.openstreetmap.org/search?country=" +
+              countryname.trim() +
+              "&polygon_geojson=1&format=json"
+          })
+          .then(function(data) {
+      
+            L.geoJSON(data[0].geojson, {
+              color: "blue",
+              weight: 2,
+              opacity: 1,
+              fillOpacity: 0.0 
+            }).addTo(map);
+          });
+      }
+      async function reverseGeocodingWithGoogle(latitude, longitude) {
+        const response=await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude},${longitude}&key=4a8e59ae14f44d888ab86477950f293a`)
+      const data=await response.json();
+      var country_name=data['results'][0]['components']['country'];
+          console.log(country_name);
+          applyCountryBorder(mymap, country_name);
+       }  
+         
     
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmlraXRoYXJhbmkiLCJhIjoiY2tmZng1MmR5MDVqbzJ5bnZ6dTNpcHNvYSJ9.OfnnjwKssel7bB4MslNx-A', {
     maxZoom: 18,
@@ -62,5 +97,4 @@
     zoomOffset: -1
     }).addTo(mymap);
 
-    L.marker([lat, long]).addTo(mymap)
-	.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+    
