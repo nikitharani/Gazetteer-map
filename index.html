@@ -18,17 +18,21 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="#">GazZate</a>
     </div>
-    <form class="navbar-form navbar-left" role="search">
+    <!-- <form class="navbar-form navbar-left" role="search">
         <div class="form-group input-group">
-          <input type="text" class="form-control" placeholder="Enter Country Name">
+          <select id="countries"></select>
+          <input type="text" class="form-control" placeholder="Enter Country Name"> 
           <span class="input-group-btn">
             <button class="btn btn-default" type="button">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </span>        
-        </div>
-      </form>
-    
+        </div>data-live-search="true" title="Choose Country" data-width="auto"
+      </form> -->
+      <select class="selectpicker" id="countries" data-width="auto">
+        
+      </select>
+      
   </div>
 </nav>
 
@@ -44,8 +48,21 @@
   </div>
 </section>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
+<footer class="container-fluid ">
+  <div id="main-container">
+    <div id="flag-container">
+      <img src="" alt="">
+    </div>
+    <div id="info-container">
+      
+      <p>Capital: <span id="capital"></span></p>
+      <p>Dialing Code: <span id="dialing-code"></span></p>
+      <p>Population: <span id="population"></span></p>
+      <p>Currencies: <span id="currencies"></span></p>
+      <p>Region: <span id="region"></span></p>
+      <p>Subregion: <span id="subregion"></span></p>
+    </div>
+  </div>
 </footer>
 
 <script src="index.js"></script>

@@ -1,32 +1,5 @@
 
-
-	// L.marker([51.5, -0.09]).addTo(mymap)
-	// 	.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
-
-	// L.circle([51.508, -0.11], 500, {
-	// 	color: 'red',
-	// 	fillColor: '#f03',
-	// 	fillOpacity: 0.5
-	// }).addTo(mymap).bindPopup("I am a circle.");
-
-	// L.polygon([
-	// 	[51.509, -0.08],
-	// 	[51.503, -0.06],
-	// 	[51.51, -0.047]
-	// ]).addTo(mymap).bindPopup("I am a polygon.");
-
-
-	// var popup = L.popup();
-
-	// function onMapClick(e) {
-	// 	popup
-	// 		.setLatLng(e.latlng)
-	// 		.setContent("You clicked the map at " + e.latlng.toString())
-	// 		.openOn(mymap);
-	// }
-
-    // mymap.on('click', onMapClick);
-    var lat=0, long=0, country_name='India';
+    var lat=0, long=0, country_name='India',count_1='India';
 
     //current location 
     
@@ -50,11 +23,7 @@
     }
         //making a map and tiles
         console.log( lat);
-        console.log( long);
-
-
-
-        
+        console.log( long);        
         
     var mymap = L.map('mapid').setView([lat, long], 13);   
     
@@ -97,4 +66,46 @@
     zoomOffset: -1
     }).addTo(mymap);
 
-    
+    //get country api
+    const countriesList = document.getElementById("countries");
+    let countries; // will contain "fetched" data
+
+// Event Listeners
+// countriesList.addEventListener("change", event => displayCountryInfo(event.target.value));
+
+countriesList.addEventListener("change", newCountrySelection);
+
+function newCountrySelection(event) {
+  displayCountryInfo(event.target.value);
+}
+
+fetch("https://restcountries.eu/rest/v2/all")
+.then(res => res.json())
+.then(data => initialize(data))
+.catch(err => console.log("Error:", err));
+
+function initialize(countriesData) {
+  countries = countriesData;
+  let options = "";
+  
+  countries.forEach(country => options+=`<option value="${country.alpha3Code}">${country.name}</option>`);
+  
+  countriesList.innerHTML = options;
+  
+  countriesList.selectedIndex = Math.floor(Math.random()*countriesList.length);
+  displayCountryInfo(countriesList[countriesList.selectedIndex].value);
+  count_1=countriesList[countriesList.selectedIndex].value;
+  applyCountryBorder(mymap, count_1);
+}
+
+function displayCountryInfo(countryByAlpha3Code) {
+  const countryData = countries.find(country => country.alpha3Code === countryByAlpha3Code);
+  document.querySelector("#flag-container img").src = countryData.flag;
+  document.querySelector("#flag-container img").alt = `Flag of ${countryData.name}`;  
+  document.getElementById("capital").innerHTML = countryData.capital;
+  document.getElementById("dialing-code").innerHTML = `+${countryData.callingCodes[0]}`;
+  document.getElementById("population").innerHTML = countryData.population.toLocaleString("en-US");
+  document.getElementById("currencies").innerHTML = countryData.currencies.filter(c => c.name).map(c => `${c.name} (${c.code})`).join(", ");
+  document.getElementById("region").innerHTML = countryData.region;
+  document.getElementById("subregion").innerHTML = countryData.subregion;
+}
