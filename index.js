@@ -1,5 +1,5 @@
 
-    var lat=0, long=0, country_name='India',count_1='India', mymap, country_altname;
+    var lat=0, long=0, country_name='India', mymap, country_altname='Ind';
     var countries_array=[],alpha3_array=[];
 
     //current location     
@@ -57,20 +57,17 @@
               fillOpacity: 0.0 
             }).addTo(map);
           });
-          console.log('applyCountryBorder -country name is :', countryname);
+          
 
       }
       async function reverseGeocodingWithGoogle(latitude, longitude) {
         const response=await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude},${longitude}&key=4a8e59ae14f44d888ab86477950f293a`)
       const data=await response.json();
       var country_name=data['results'][0]['components']['country'];
-      var country_altname=data['results'][0]['components']['ISO_3166-1_alpha-3'];
-          console.log(country_name);
-          console.log(country_altname);
-          applyCountryBorder(mymap, country_name);
-          console.log('fist play');
+      var country_altname=data['results'][0]['components']['ISO_3166-1_alpha-3'];          
+          applyCountryBorder(mymap, country_name);          
           displayCountryInfo(country_altname);
-          console.log('second play');
+          
        }     
 
     //get country api
@@ -83,10 +80,11 @@
 countriesList.addEventListener("change", newCountrySelection);
 
 function newCountrySelection(event) {
-  console.log('this is new country func');
-  displayCountryInfo(event.target.value);
+    // mymap.off();
+    // mymap.remove();
+  displayCountryInfo(alpha3_array[parseInt(event.target.value)]);
   // console.log(event.target.innerText);
-   applyCountryBorder(mymap,"india");
+   applyCountryBorder(mymap,countries_array[parseInt(event.target.value)]);
 }
 
 fetch("https://restcountries.eu/rest/v2/all")
@@ -98,18 +96,22 @@ function initialize(countriesData) {
   countries = countriesData;
   let options = "";
 
-  countries.forEach(country => options+=`<option value="${country.alpha3Code}">${country.name}</option>`);
+  // countries.forEach(country => options+=`<option value="${country.alpha3Code}">${country.name}</option>`);
+  for(i =0; i<countries.length; i++)
+  {
+    countries_array[i]=countries[i].name;
+    alpha3_array[i]=countries[i].alpha3Code;
+    options+=`<option value="${i}">${countries[i].name}</option>`;
+  }
 
   countriesList.innerHTML = options;
   // console.log('fisrt init');
 
-  countriesList.selectedIndex = Math.floor(Math.random()*countriesList.length);
-  displayCountryInfo(countriesList[countriesList.selectedIndex].value);
+  // countriesList.selectedIndex = Math.floor(Math.random()*countriesList.length);
+  // displayCountryInfo(countriesList[countriesList.selectedIndex].value);
   // console.log('second init');
 
-  count_1=countriesList[countriesList.selectedIndex].value;
-    console.log('country name is :', count_1);
-  // applyCountryBorder(mymap, count_1);
+  
 }
 
 function displayCountryInfo(countryByAlpha3Code) {
