@@ -1,6 +1,5 @@
 
     var lat=0, long=0, country_name='India', mymap, country_altname='Ind';
-    var countries_array=[],alpha3_array=[];
 
     //current location     
     if('geolocation' in navigator){
@@ -13,7 +12,7 @@
             console.log( long);
             reverseGeocodingWithGoogle(lat, long);
             console.log(country_name);
-            mymap.setView([lat, long], 13);
+            mymap.setView([lat, long], 5);
             // mymap.marker([lat, long]);
         });
         
@@ -23,22 +22,26 @@
     }
         //making a map and tiles
         console.log( lat);
-        console.log( long);        
-        
-    mymap = L.map('mapid').setView([lat, long], 13);   
+        console.log( long);      
+      
+    create_map();
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmlraXRoYXJhbmkiLCJhIjoiY2tmZng1MmR5MDVqbzJ5bnZ6dTNpcHNvYSJ9.OfnnjwKssel7bB4MslNx-A', {
-      maxZoom: 18,
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      id: 'mapbox/streets-v11',
-      tileSize: 512,
-      zoomOffset: -1
-      }).  addTo(mymap);
-    
+    function create_map()
+    {
+      mymap = L.map('mapid').setView([lat, long], 5);   
+
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmlraXRoYXJhbmkiLCJhIjoiY2tmZng1MmR5MDVqbzJ5bnZ6dTNpcHNvYSJ9.OfnnjwKssel7bB4MslNx-A', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+            '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1
+        }).  addTo(mymap);
+    }
+
     function applyCountryBorder(map, countryname) {
-       console.log('bordr country name is :', countryname);  
         jQuery
           .ajax({
             type: "GET",
@@ -80,11 +83,15 @@
 countriesList.addEventListener("change", newCountrySelection);
 
 function newCountrySelection(event) {
-    // mymap.off();
-    // mymap.remove();
-  displayCountryInfo(alpha3_array[parseInt(event.target.value)]);
+    
+  var indx = parseInt(event.target.value);
+  // mymap.off();
+  mymap.remove();
+  create_map();
+  mymap.setView([countries[indx].latlng[0], countries[indx].latlng[1]], 3);
+  displayCountryInfo(countries[indx].alpha3Code);
   // console.log(event.target.innerText);
-   applyCountryBorder(mymap,countries_array[parseInt(event.target.value)]);
+   applyCountryBorder(mymap,countries[indx].name);
 }
 
 fetch("https://restcountries.eu/rest/v2/all")
@@ -99,8 +106,6 @@ function initialize(countriesData) {
   // countries.forEach(country => options+=`<option value="${country.alpha3Code}">${country.name}</option>`);
   for(i =0; i<countries.length; i++)
   {
-    countries_array[i]=countries[i].name;
-    alpha3_array[i]=countries[i].alpha3Code;
     options+=`<option value="${i}">${countries[i].name}</option>`;
   }
 
