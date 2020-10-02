@@ -1,5 +1,5 @@
 
-    var lat=0, long=0, country_name='India', mymap, country_altname='Ind';
+    var lat=0, long=0, country_name='India', mymap, country_alpaname='Ind',currency_code='INR';
 
     //current location     
     if('geolocation' in navigator){
@@ -66,11 +66,13 @@
       async function reverseGeocodingWithGoogle(latitude, longitude) {
         const response=await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude},${longitude}&key=4a8e59ae14f44d888ab86477950f293a`)
       const data=await response.json();
-      var country_name=data['results'][0]['components']['country'];
-      var country_altname=data['results'][0]['components']['ISO_3166-1_alpha-3'];          
+      country_name=data['results'][0]['components']['country'];
+      country_alpaname=data['results'][0]['components']['ISO_3166-1_alpha-3'];  
+      currency_code='GBP';
+
           applyCountryBorder(mymap, country_name);          
-          displayCountryInfo(country_altname);
-          
+          displayCountryInfo(country_alpaname);
+          displayCurrencyInfo(currency_code);
        }     
 
     //get country api
@@ -80,18 +82,25 @@
 // Event Listeners
 // countriesList.addEventListener("change", event => displayCountryInfo(event.target.value));
 
-countriesList.addEventListener("click", newCountrySelection);
+countriesList.addEventListener("change", newCountrySelection);
 
 function newCountrySelection(event) {
     
   var indx = parseInt(event.target.value);
-  // mymap.off();
-  mymap.remove();
-  create_map();
-  mymap.setView([countries[indx].latlng[0], countries[indx].latlng[1]], 3);
-  displayCountryInfo(countries[indx].alpha3Code);
-  // console.log(event.target.innerText);
-   applyCountryBorder(mymap,countries[indx].name);
+  if (country_name != countries[indx].name)  
+  {  
+    country_alpaname = countries[indx].alpha3Code;
+    country_name = countries[indx].name;
+    currency_code = countries[indx]["currencies"][0]['code'];
+
+    mymap.remove();
+    create_map();
+    mymap.setView([countries[indx].latlng[0], countries[indx].latlng[1]], 3);
+    displayCountryInfo(country_alpaname);
+    // console.log(event.target.innerText);
+    applyCountryBorder(mymap,country_name);
+    displayCurrencyInfo(currency_code);
+  }
 }
 
 fetch("https://restcountries.eu/rest/v2/all")
@@ -132,39 +141,19 @@ function displayCountryInfo(countryByAlpha3Code) {
 }
 
 // get currencies using ajax call
-$('#countries').click(function() {
-		
-  $.ajax({
-    url: "libs/php/index.php",
-    type: 'POST',
-    dataType: 'json',
-    // data: {
-    //   country: $('#selCountry').val(),
-    //   lang: $('#selLanguage').val()
-    // },
-    success: function(result) {
+function displayCurrencyInfo(curr_code){
 
-      console.log(result);
-
-      if (result.status.name == "ok") {
-
-        // $('#txtContinent').html(result['data'][0]['continent']);
-        // $('#txtCapital').html(result['data'][0]['capital']);
-        // $('#txtLanguages').html(result['data'][0]['languages']);
-        // $('#txtPopulation').html(result['data'][0]['population']);
-        // $('#txtArea').html(result['data'][0]['areaInSqKm']);
-
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var myArr = JSON.parse(this.responseText);
+        document.getElementById("currency").innerHTML = myArr.data;
       }
-    
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      // your error code
-       $('#err').html('Cannot get country currency info!');	
-    }
-  }); 
+    };
+    xmlhttp.open("GET", "index.php?curr_code=" + curr_code, true);
+    xmlhttp.send();
 
-
-});
+}
 
 
 
