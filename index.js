@@ -80,7 +80,7 @@
 // Event Listeners
 // countriesList.addEventListener("change", event => displayCountryInfo(event.target.value));
 
-countriesList.addEventListener("change", newCountrySelection);
+countriesList.addEventListener("click", newCountrySelection);
 
 function newCountrySelection(event) {
     
@@ -130,3 +130,42 @@ function displayCountryInfo(countryByAlpha3Code) {
   document.getElementById("region").innerHTML = countryData.region;
   document.getElementById("subregion").innerHTML = countryData.subregion;
 }
+
+// get currencies using ajax call
+$('#countries').click(function() {
+		
+  $.ajax({
+    url: "libs/php/index.php",
+    type: 'POST',
+    dataType: 'json',
+    // data: {
+    //   country: $('#selCountry').val(),
+    //   lang: $('#selLanguage').val()
+    // },
+    success: function(result) {
+
+      console.log(result);
+
+      if (result.status.name == "ok") {
+
+        // $('#txtContinent').html(result['data'][0]['continent']);
+        // $('#txtCapital').html(result['data'][0]['capital']);
+        // $('#txtLanguages').html(result['data'][0]['languages']);
+        // $('#txtPopulation').html(result['data'][0]['population']);
+        // $('#txtArea').html(result['data'][0]['areaInSqKm']);
+
+      }
+    
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      // your error code
+       $('#err').html('Cannot get country currency info!');	
+    }
+  }); 
+
+
+});
+
+
+
+  
