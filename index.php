@@ -1,17 +1,75 @@
 <?php
-  function writeMsg($stringText, $writeflag) {
+//echo function
+  function writeMsg($stringText, $writeflag=false) {
     if ($writeflag)
     {
     echo "$stringText <br>";
     }
   }
 
+  // Delete or update old data function  
+  function delDb_data($sql_connection, $table)
+  {
+    $del_query = "DELETE FROM $table";
+    $flag = mysqli_query($sql_connection, $del_query);
+    if ($flag)
+    {
+      global $display_echo;
+      writeMsg("Deleted table successfully",$display_echo);
+    }
+  }
+
+  // send entries to database function  
+  function sendDb_data($sql_connection, $table,$apiData){
+    delDb_data($sql_connection, $table);
+    $currency_object = $apiData['rates'];//json_decode($data, true); //Convert JSON String into PHP Array
+    foreach($currency_object as $key => $value) //Extract the Array Values by using Foreach Loop
+    {          
+      $query .= "INSERT INTO $table (currency_code , currency_rate) VALUES ('$key', $value);";         
+    }    
+    
+    if(mysqli_multi_query($sql_connection, $query)) //Run Mutliple Insert Query
+    {
+      global $display_echo;
+      writeMsg("employee data inserted",$display_echo);      
+    }
+}
+
+function getDb_data($sql_connection, $table, $currency_code)
+    {
+      $retrive ="SELECT currency_code, currency_rate FROM $table";
+      $curr_result = mysqli_query($sql_connection, $retrive);
+      $currencyValue = 0;
+      global $display_echo;
+
+      if (mysqli_num_rows($curr_result) > 0) {
+        // output data of each row
+        while($row = mysqli_fetch_assoc($curr_result)) {
+          // echo "currency_code: " . $row["currency_code"]. " - currency_rate: " . $row["currency_rate"]. "<br>";
+          if (!strcmp($row["currency_code"],$currency_code))
+          {
+            $currencyValue = $row["currency_rate"];
+            break;
+          }
+        }
+      } else {
+        writeMsg("No entries in database",$display_echo);      
+      }
+
+      return $currencyValue;
+  }
+
+
+  $display_echo = false;
+  $table_name = "my_table";
+
     $executionStartTime = microtime(true) / 1000;
     $url='https://openexchangerates.org/api/latest.json?app_id=0f69fa8292e147f7ba4e3d02a4fa52f0';
-    $currency_code = $_REQUEST['curr_code'];
-    // $currency_code = "AUD";
-    $display_echo = false;
+    if (empty($_REQUEST['curr_code']))
+    {$currency_code = "AUD";}
+    else {$currency_code = $_REQUEST['curr_code'];}
 
+    
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -40,42 +98,23 @@
     $query = '';
     $table_data = '';
 
-    // Delete or update old data
-    $del_query = "DELETE FROM my_table";
-    $flag = mysqli_query($connect, $del_query);
-    if ($flag)
-    {
-      writeMsg("Deleted table successfully",$display_echo);
-    }
+    //  Delete or update old data
+    // delDb_data($connect, $table_name);    
+    
 
     // send entries to database
-    $currency_object = $decode['rates'];//json_decode($data, true); //Convert JSON String into PHP Array
-    foreach($currency_object as $key => $value) //Extract the Array Values by using Foreach Loop
-    {          
-      $query .= "INSERT INTO my_table (currency_code , currency_rate) VALUES ('$key', $value);";   
-      // $query2 .= "CREATE EVENT test_event_03
-      //             ON SCHEDULE EVERY 1 MINUTE
-      //             STARTS CURRENT_TIMESTAMP
-      //             ENDS CURRENT_TIMESTAMP + INTERVAL 1 HOUR
-      //             DO
-      //             INSERT INTO messages(message,created_at)
-      //             VALUES('Test MySQL recurring Event',NOW())";
-
-      if (!strcmp($key,$currency_code))
-      {
-        $output['data'] = $value;
-        break;
-      }
-
-    }    
-    if(mysqli_multi_query($connect, $query)) //Run Mutliple Insert Query
+    $milliseconds = 5000;
+    $seconds=(int)$milliseconds/1000;
+    while(true)
     {
-      writeMsg("employee data inserted",$display_echo);      
+      sendDb_data($connect, $table_name,$decode);
+      sleep($seconds);
     }
+    
 
     // retrive data from database
-    $retrive = "SELECT FROM my_table";
-    $curr_result = mysqli_query($connect, $retrive);
+    $output['data'] = getDb_data($connect, $table_name, $currency_code);  
+
 
     // close sql connection
       $connect_close  = mysqli_close($connect);

@@ -147,7 +147,7 @@ function displayCurrencyInfo(curr_code){
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var myArr = JSON.parse(this.responseText);
-        document.getElementById("currency").innerHTML = myArr.data;
+        document.getElementById("currency").innerHTML = myArr.data +" "+ curr_code;
       }
     };
     xmlhttp.open("GET", "index.php?curr_code=" + curr_code, true);
