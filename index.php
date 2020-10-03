@@ -59,28 +59,72 @@ function getDb_data($sql_connection, $table, $currency_code)
       return $currencyValue;
   }
 
-
+  // global variables here
   $display_echo = false;
   $table_name = "my_table";
+  $myFile = "curr_data.json";
+
+  // Find the time difference b/w current & previous time request
+  /*$current_dateTime = date("Y-m-d h:i:sa");
+  $previous_dateTime; 
+  
+ 
+  $minutes =0;
+  echo 'currentTime :'. ($current_dateTime);
+  // echo 'previousTime :'. $previous_dateTime;
+
+  if (!empty($previous_dateTime))
+  {
+  $start_date = new DateTime($current_dateTime);
+  $since_start = $start_date->diff($previous_dateTime);
+
+//To get the total number of minutes:
+$minutes = $since_start->days * 24 * 60;
+$minutes += $since_start->h * 60;
+$minutes += $since_start->i;
+  }
+// echo $minutes.' minutes';
+
+if(($minutes>0.5) || (empty($previous_dateTime))) {
+  echo 'writing data to db';
+}else{
+echo 'using old db';
+}
+$previous_dateTime=$current_dateTime;*/
+
+
+
+
 
     $executionStartTime = microtime(true) / 1000;
-    $url='https://openexchangerates.org/api/latest.json?app_id=0f69fa8292e147f7ba4e3d02a4fa52f0';
     if (empty($_REQUEST['curr_code']))
     {$currency_code = "AUD";}
     else {$currency_code = $_REQUEST['curr_code'];}
 
-    
+    // // Get currency json from API
+    // $url='https://openexchangerates.org/api/latest.json?app_id=0f69fa8292e147f7ba4e3d02a4fa52f0';    
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_URL,$url);
+    // $ch = curl_init($url);
+    // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    // curl_setopt($ch, CURLOPT_URL,$url);
 
-    $result=curl_exec($ch);
+    // $result=curl_exec($ch);
 
-    curl_close($ch);
+    // curl_close($ch);
 
-    $decode = json_decode($result,true);	
+    // $decode = json_decode($result,true);	
+
+    // // write json to a file
+    // if(file_put_contents($myFile, $result))
+    //  {
+    //   writeMsg('Data successfully saved to Json file',$display_echo);
+    //  }
+    // else {writeMsg('error in saving data to json file',$display_echo);}
+      
+
+    //Get data from existing json file
+    $result = file_get_contents($myFile);
 
     $output['status']['code'] = "200";
     $output['status']['name'] = "ok";
@@ -102,14 +146,14 @@ function getDb_data($sql_connection, $table, $currency_code)
     // delDb_data($connect, $table_name);    
     
 
-    // send entries to database
-    $milliseconds = 5000;
-    $seconds=(int)$milliseconds/1000;
-    while(true)
-    {
-      sendDb_data($connect, $table_name,$decode);
-      sleep($seconds);
-    }
+    // // send entries to database
+    // $milliseconds = 5000;
+    // $seconds=(int)$milliseconds/1000;
+    // while(true)
+    // {
+    //   sendDb_data($connect, $table_name,$decode);
+    //   sleep($seconds);
+    // }
     
 
     // retrive data from database
