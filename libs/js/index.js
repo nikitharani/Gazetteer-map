@@ -1,6 +1,9 @@
 
     var lat=0, long=0, country_name='India', mymap, country_alpaname='Ind',currency_code='INR',capital_city='delhi';
     var countries; // will contain "fetched" data
+    var latLngBounds;
+    var timeZones;
+    
 
     var weather_api_key = '93cb5e76b3c67107884e4ce968c5b551';
     var opencage_api_key = '4a8e59ae14f44d888ab86477950f293a';
@@ -57,13 +60,16 @@
               "&polygon_geojson=1&format=json"
           })
           .then(function(data) {
-      
+            latLngBounds = data[0].boundingbox;      
             L.geoJSON(data[0].geojson, {
               color: "blue",
               weight: 2,
               opacity: 1,
               fillOpacity: 0.0 
             }).addTo(map);
+            map.fitBounds([
+              [parseFloat(latLngBounds[0]),parseFloat(latLngBounds[2])],
+              [parseFloat(latLngBounds[1]),parseFloat(latLngBounds[3])]]);
           });
           
 
@@ -76,14 +82,15 @@
       country_alpaname=data['results'][0]['components']['ISO_3166-1_alpha-3'];  
       currency_code=data['results'][0]['annotations']['currency']['iso_code'];
       capital_city = getCapital(country_alpaname);
+      timeZones=getTimeZones(country_alpaname);
 
           applyCountryBorder(mymap, country_name);          
           displayCountryInfo(country_alpaname);
           // displayCurrencyInfo(currency_code);
           // displayWeatherInfo(capital_city);
-          xmlhttp_php("index.php?curr_code=" + currency_code, displayCurrencyInfo);
-          xmlhttp_php("getWeatherInfo.php?city=" + capital_city, displayWeatherInfo);
-          xmlhttp_php("getCountryIntro.php?country=" + country_name, displayCountryIntro);
+          xmlhttp_php("libs/php/index.php?curr_code=" + currency_code, displayCurrencyInfo);
+          xmlhttp_php("libs/php/getWeatherInfo.php?city=" + capital_city, displayWeatherInfo);
+          xmlhttp_php("libs/php/getCountryIntro.php?country=" + country_name, displayCountryIntro);
        }     
 
     //get country api
@@ -99,22 +106,25 @@ function newCountrySelection(event) {
   var indx = parseInt(event.target.value);
   if (country_name != countries[indx].name)  
   {  
+    var loc = window.location.pathname;
+    var dir = loc.substring(0, loc.lastIndexOf('/'));
+
     country_alpaname = countries[indx].alpha3Code;
     country_name = countries[indx].name;
     currency_code = countries[indx]["currencies"][0]['code'];
     capital_city = countries[indx].capital;
-
+ 
     mymap.remove();
     create_map();
-    mymap.setView([countries[indx].latlng[0], countries[indx].latlng[1]], 3);
+    // mymap.setView([countries[indx].latlng[0], countries[indx].latlng[1]], 3);
     displayCountryInfo(country_alpaname);
     // console.log(event.target.innerText);
     applyCountryBorder(mymap,country_name);
     // displayCurrencyInfo(currency_code);
     // displayWeatherInfo(capital_city);
-    xmlhttp_php("index.php?curr_code=" + currency_code, displayCurrencyInfo);
-    xmlhttp_php("getWeatherInfo.php?city=" + capital_city, displayWeatherInfo);
-    xmlhttp_php("getCountryIntro.php?country=" + country_name, displayCountryIntro);
+    xmlhttp_php("libs/php/index.php?curr_code=" + currency_code, displayCurrencyInfo);
+    xmlhttp_php("libs/php/getWeatherInfo.php?city=" + capital_city, displayWeatherInfo);
+    xmlhttp_php("libs/php/getCountryIntro.php?country=" + country_name, displayCountryIntro);
     
   }
 }
@@ -153,6 +163,11 @@ function displayCountryInfo(countryByAlpha3Code) {
   document.getElementById("currencies").innerHTML = countryData.currencies.filter(c => c.name).map(c => `${c.name} (${c.code})`).join(", ");
   document.getElementById("region").innerHTML = countryData.region;
   document.getElementById("subregion").innerHTML = countryData.subregion;
+  document.getElementById("area").innerHTML = countryData.area;
+  document.getElementById("country-name").innerHTML = countryData.name;
+  document.getElementById("time-zones").innerHTML = countryData.timezones; // create in html
+
+
 }
 
 // get currencies using ajax call
@@ -178,7 +193,20 @@ function displayWeatherInfo(xmlhttp){
 // get countryIntro using ajax call
 function displayCountryIntro(xhttp){    
   var countryIntro = JSON.parse(xhttp.responseText);
-  document.getElementById("country-intro").innerHTML = countryIntro.data;
+  document.getElementById("country-intro").innerHTML = countryIntro.data.introduction;
+  document.getElementById("gdp").innerHTML = countryIntro.data.gdp.value; 
+
+  console.log(countryIntro.data);
+ 
+  document.getElementById("languages").innerHTML = countryIntro.data.people.languages;
+  document.getElementById("religions").innerHTML = countryIntro.data.people.religions;
+  document.getElementById("ethnic-groups").innerHTML = countryIntro.data.people.ethnic_groups;
+  document.getElementById("death-rate").innerHTML = countryIntro.data.people.death_rate;
+  document.getElementById("birth-rate").innerHTML = countryIntro.data.people.birth_rate;
+  document.getElementById("unemployment").innerHTML = countryIntro.data.people.unemployment_rate;
+  document.getElementById("sex-ratio").innerHTML = countryIntro.data.people.sex_ratio;
+
+
 
 }
 
@@ -205,6 +233,19 @@ function getCapital(alphaCode)
     if (!(countries[i].alpha3Code.localeCompare(alphaCode)))
     {
       return countries[i].capital
+    }
+  }
+
+  return "";
+  
+}
+function getTimeZones(alphaCode)
+{
+  for(i =0; i<countries.length; i++)
+  {
+    if (!(countries[i].alpha3Code.localeCompare(alphaCode)))
+    {
+      return countries[i].timezones
     }
   }
 

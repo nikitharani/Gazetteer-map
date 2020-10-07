@@ -1,0 +1,40 @@
+#countries{
+    margin: 20px auto;
+    padding: 5px;    
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    text-align-last: center;
+    width:400px;
+    
+  }
+  #mapid{
+    width: 1200px; 
+    height: 400px
+  }
+  /* #country-intro{
+      text-align: center;
+  } */
+
+  #flag-container {
+    /* height: 50px;
+    width:100px;
+    border: 1px solid #333; */
+    /* mr-auto col-auto */
+    
+    /* margin-right: 3px;
+    margin-top: 3px; */
+    
+  }
+  #flag-container img {
+    margin-top:4px;
+    display: block;
+    width: 100px;
+    height: 50px;
+  }
+  /* #demo{
+      color: blue;
+  }
+  #info-container{
+      margin-bottom: 10px;
+  } */

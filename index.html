@@ -1,81 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel='stylesheet' href="index.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GaZetteer</title>
+    <!-- Bootstrap Css files-->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/mdb.css">
+    <link rel="stylesheet" href="libs/css/style.css">
+    
+    <!-- Bootstrap JS files-->
+    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    
+    <script src="bootstrap/js/mdb.js"></script>
+    <script src="bootstrap/js/popper.js"></script>
+
+    <!-- Leaflet files-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 </head>
 <body>
+        <!-- Navbar -->
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">GazZate</a>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">                
+                <img src="images/gazatte.jpeg" height=40px width=50px/>
+                <a class="navbar-brand" href="test.html" >GaZetteer</a>
+                <select id="countries" class="browser-default custom-select custom-select-sm ">
+                    <option selected>Choose one of the following...</option>
+                </select>
+            </div>               
+        </div>
+    </nav>
+     
+    <!-- Map -->
+
+    <div class="container">
+        <div class="row">              
+        <div class="col-md-12" id="mapid" ></div>          
+        </div>
     </div>
-    <!-- <form class="navbar-form navbar-left" role="search">
-        <div class="form-group input-group">
-          <select id="countries"></select>
-          <input type="text" class="form-control" placeholder="Enter Country Name"> 
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
-          </span>        
-        </div>data-live-search="true" title="Choose Country" data-width="auto"
-      </form> -->
-      <select class="selectpicker" id="countries" data-width="auto" title="Choose one of the following...">
+
+    <!--middle body -->
+
+    <div class="container" mb-5>
+        <div class="row">              
+            <div class="col-md-5 bg-primary  d-inline-flex">   
+                
+
+
+                <div>                    
+                    <p>Capital: <span id="capital"></span></p>
+                    <p>Area: <span id="area"></span></p>
+                    <p>Population: <span id="population"></span></p>
+                    <p>GDP(in USD): $ <span id="gdp"> billion (2017)</span></p>
+                    <p>Currency: <span id="currencies"></span></p>
+                    <p>Region: <span id="region"></span></p>
+                    <p>Subregion: <span id="subregion"></span></p>
+                    <p>Dialing Code: <span id="dialing-code"></span></p>                                      
+                    <p>1 USD = <span id="currency"></span></p>
+                    <p>TimeZones: <span id="time-zones"></span></p>     
+                    <p>Languages: <span id="languages"></span></p>                                      
+                                 
+
+                </div>
+                <div id="flag-container">
+                    <img src="" alt="">
+                    <h5 id="country-name"></h5>
+                </div>
+
+                
+            </div>  
+
+            
+            <div class="col-md-7 text-center">                
+                <p>Introduction: <span id="country-intro"></span></p>        
+            </div>     
+
+
+
+
+                    
         
-      </select>
-      
-  </div>
-</nav>
+        </div>
+    </div>
+<!--footer -->
+    <div class="container" mb-5>
+        <div class="row">              
+            <div class="col-md-3 bg-secondary "> 
+                <a class="btn btn-primary" data-toggle="collapse" href="#countryinfo" role="button" aria-expanded="false" aria-controls="countryinfo">
+                    Country 
+                </a>
+                  
+                <div class="collapse" id="countryinfo">
+                    <div class="card card-body">
+                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                </div>                      
+                
+            </div>  
 
-  
-<section>
-  <div class="container">
-    <div class="row">
-      
+            <div class="col-md-3 bg-secondary "> 
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Link with href
+                  </a>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                  </div>                      
+                
+            </div>  
+
+            <div class="col-md-3 bg-secondary "> 
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Link with href
+                  </a>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                  </div>                      
+                
+            </div>  
+
+            <div class="col-md-3 bg-secondary "> 
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Link with href
+                  </a>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                  </div>                      
+                
+            </div>         
         
-    <div class="col-lg-6" id="mapid" ></div>
-      
+        </div>
     </div>
-  </div>
-</section>
 
-<footer class="container-fluid ">
-  <div id="main-container">
-    <div id="flag-container">
-      <img src="" alt="">
-    </div>
-    <div id="info-container">      
-      <p>Capital: <span id="capital"></span></p>
-      <p>Dialing Code: <span id="dialing-code"></span></p>
-      <p>Population: <span id="population"></span></p>
-      <p>Currencies: <span id="currencies"></span></p>
-      <p>Region: <span id="region"></span></p>
-      <p>Subregion: <span id="subregion"></span></p>
-      <p>1 USD = <span id="currency"></span></p>
 
-      <p>Weather-in : <span id="weathercity"></span></p>
-      <p>Max-Temp: <span id="maxtemp"></span></p>
-      <p>Min-Temp: <span id="mintemp"></span></p>
-      <p>Wind: <span id="wind"></span></p>
-      <p>Humidity: <span id="humidity"></span></p>
-      <p>Description: <span id="description"></span></p>
-      <p>Country Introduction: <span id="country-intro"></span></p>
 
-    </div>
+    <!-- <div class="card">
+        <div class="class-header bg-danger" data-toggle="collapse" data-target="#country-info"></div>
+        <p>Country Info: <span id="country-intro"></span></p>
+    </div>   
+    <div class="collapse" id="country-intro">
+        <div class="card-body">
+
+        </div>
+    </div>      -->
     
-  </div>
-</footer>
 
-<script src="index.js"></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <script src="libs/js/index.js"></script>
+
+
+
+    
 </body>
 </html>
-
