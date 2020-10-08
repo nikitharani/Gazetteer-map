@@ -83,6 +83,7 @@
       currency_code=data['results'][0]['annotations']['currency']['iso_code'];
       capital_city = getCapital(country_alpaname);
       timeZones=getTimeZones(country_alpaname);
+      console.log("Inside reverseGeocodingWithGoogle function");
 
           applyCountryBorder(mymap, country_name);          
           displayCountryInfo(country_alpaname);
