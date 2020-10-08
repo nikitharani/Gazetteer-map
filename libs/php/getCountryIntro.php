@@ -39,7 +39,7 @@ foreach (decode['countries'] as $key => $value) {
     $output['data']['introduction']=$country_data['introduction']['background'];
 
     $output['data']['gdp']['value']=($country_data['economy']['gdp']['purchasing_power_parity']['annual_values'][0]['value'])/pow(10,9);
-    // $output['data']['gdp']['year']=$country_data['economy']['gdp']['purchasing_power_parity']['annual_values'][0]['date'];
+    $output['data']['economy']=$country_data['economy']['overview'];
     // $output['data']['gdp']['units']=$country_data['economy']['gdp']['purchasing_power_parity']['annual_values'][0]['units'];
 
     $lan ="";

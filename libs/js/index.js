@@ -194,9 +194,10 @@ function displayWeatherInfo(xmlhttp){
 function displayCountryIntro(xhttp){    
   var countryIntro = JSON.parse(xhttp.responseText);
   document.getElementById("country-intro").innerHTML = countryIntro.data.introduction;
-  document.getElementById("gdp").innerHTML = countryIntro.data.gdp.value; 
+  document.getElementById("gdp").innerHTML = "$" + (countryIntro.data.gdp.value).toString()+ " billion (in 2017)"; 
+  document.getElementById("economy").innerHTML = countryIntro.data.economy;
 
-  console.log(countryIntro.data);
+  // console.log(countryIntro.data);
  
   document.getElementById("languages").innerHTML = countryIntro.data.people.languages;
   document.getElementById("religions").innerHTML = countryIntro.data.people.religions;

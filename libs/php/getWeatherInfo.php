@@ -5,6 +5,8 @@
 	{$city = "delhi";}
 	else {$city = $_REQUEST['city'];}
 	$api_key = '93cb5e76b3c67107884e4ce968c5b551';
+	// $api_key = getenv('weather_api_key', $local_only = TRUE );
+
 	
 	$url = 'http://api.openweathermap.org/data/2.5/weather?q=' . $city . '&appid='.$api_key;
 

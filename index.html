@@ -26,7 +26,7 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
             <div class="navbar-header">                
-                <img src="images/gazatte.jpeg" height=40px width=50px/>
+                <img src="images/gazatee.jpg" height=40px width=50px/>
                 <a class="navbar-brand" href="test.html" >GaZetteer</a>
                 <select id="countries" class="browser-default custom-select custom-select-sm ">
                     <option selected>Choose one of the following...</option>
@@ -43,41 +43,266 @@
         </div>
     </div>
 
-    <!--middle body -->
+    <!--dummy block-->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 ">
+               <!--change-->
+                <div class="container">
+                  <div class="row justify-content-between">
+                    <div class="col-xs-4 mt-2">
+                      <h3 id="country-name"></h3>                                          
+                    </div>
+                    <div class="col-xs-4" id="flag-container">
+                      <img
+                        
+                        src=""
+                        alt="flag"
+                        id="flag"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                  
+                  <div class="row justify-content-between">
+                    <div class="mr-4 ml-3 mt-2">Capital:</div>
+                    <div class="mr-3 mt-2" id="capital"></div>
+                  </div>
+                  <div class="row justify-content-between mt-3">
+                    <div class="mr-4 ml-3">Area :</div>
+                    <div class="mr-3" id="area"></div>
+                  </div>
+                  <div class="row justify-content-between mt-3">
+                    <div class="mr-4 ml-3">Population :</div>
+                    <div class="mr-3" id="population"></div>
+                  </div>
+                  <div class="row justify-content-between mt-3">
+                    <div class="mr-4 ml-3">GDP :</div>
+                    <div class="mr-3" id="gdp"></div>
+                  </div>
+                  <div class="row justify-content-between mt-3">
+                    <div class="mr-4 ml-3">Currencies :</div>
+                    <div class="mr-3" id="currencies"></div>
+                  </div>
 
+                  <div class="row justify-content-between mt-3">
+                    <div class="mr-4 ml-3">Region :</div>
+                    <div class="mr-3" id="region"></div>
+                  </div>
+                  <div class="row justify-content-between mt-3">
+                    <div class="mr-4 ml-3">Subregion :</div>
+                    <div class="mr-3" id="subregion"></div>
+                  </div>
+                  <div class="row justify-content-between mt-3">
+                    <div class="mr-4 ml-3">Dialing Code :</div>
+                    <div class="mr-3" id="dialing-code"></div>
+                  </div> 
+                  <div class="row justify-content-between mt-3">
+                    <div class="mr-4 ml-3">1 USD :</div>
+                    <div class="mr-3" id="currency"></div>
+                  </div>
+
+            </div>
+            <div class="col-lg-7 ">
+              <div class="row">
+                <div class="col-lg-12 ">
+                  <h3 class="text-center mt-2">Introduction</h3>
+                  <p class="ml-2" id="country-intro"></p>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>                  
+        
+        
+
+    <!-- test block -->
     <div class="container" mb-5>
         <div class="row">              
-            <div class="col-md-5 bg-primary  d-inline-flex">   
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">   
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary pl-5 pr-5" data-toggle="modal" data-target="#PeopleInfo">
+                    People
+                    </button>   
+                    <div class="modal fade" id="PeopleInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content" >
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">People</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container mt-2">
+                                    <div class="row justify-content-between">
+                                      <div class="mr-4">Religions:</div>
+                                      <div class="" id="religions"></div>
+                                    </div>
+                                    <div class="row justify-content-between mt-3">
+                                      <div class="mr-4">Languages:</div>
+                                      <div class="" id="languages"></div>
+                                    </div>
+                                    <div class="row justify-content-between mt-3">
+                                      <div class="mr-4">Ethnic Groups:</div>
+                                      <div class="" id="ethnic-groups"></div>
+                                    </div>
+                                    <div class="row justify-content-between mt-3">
+                                      <div class="mr-4">Birth Rate (%):</div>
+                                      <div class="" id="birth-rate"></div>
+                                    </div>
+                                    <div class="row justify-content-between mt-3">
+                                      <div class="mr-4">Death Rate (%):</div>
+                                      <div class="" id="death-rate"></div>
+                                    </div>
+                  
+                                    <div class="row justify-content-between mt-3">
+                                      <div class="mr-4">Unemployment (%):</div>
+                                      <div class="" id="unemployment"></div>
+                                    </div>
+                                    <div class="row justify-content-between mt-3">
+                                      <div class="mr-4">Males/Female:</div>
+                                      <div class="" id="sex-ratio"></div>
+                                    </div>                               
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                          
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                 
 
 
-                <div>                    
-                    <p>Capital: <span id="capital"></span></p>
-                    <p>Area: <span id="area"></span></p>
-                    <p>Population: <span id="population"></span></p>
-                    <p>GDP(in USD): $ <span id="gdp"> billion (2017)</span></p>
-                    <p>Currency: <span id="currencies"></span></p>
-                    <p>Region: <span id="region"></span></p>
-                    <p>Subregion: <span id="subregion"></span></p>
-                    <p>Dialing Code: <span id="dialing-code"></span></p>                                      
-                    <p>1 USD = <span id="currency"></span></p>
-                    <p>TimeZones: <span id="time-zones"></span></p>     
-                    <p>Languages: <span id="languages"></span></p>                                      
-                                 
-
-                </div>
-                <div id="flag-container">
-                    <img src="" alt="">
-                    <h5 id="country-name"></h5>
-                </div>
+                
+                
 
                 
             </div>  
 
             
-            <div class="col-md-7 text-center">                
-                <p>Introduction: <span id="country-intro"></span></p>        
-            </div>     
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">                
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary pl-5 pr-5" data-toggle="modal" data-target="#Weather">
+                    Weather
+                    </button>   
+                    <div class="modal fade" id="Weather" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content" >
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Weather</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container mt-2">
+                                    
+                                        <div class="row justify-content-between">
+                                          <div class="mr-4">Weather in the Capital:</div>
+                                          <div class="" id="weathercity"></div>
+                                        </div>
+                                        <div class="row justify-content-between mt-3">
+                                          <div class="mr-4">Min Temperature (°F):</div>
+                                          <div class="" id="mintemp"></div>
+                                        </div>
+                                        <div class="row justify-content-between mt-3">
+                                          <div class="mr-4">Max Temperature  (°F):</div>
+                                          <div class="" id="maxtemp"></div>
+                                        </div>
+                                        <div class="row justify-content-between mt-3">
+                                          <div class="mr-4">Wind (mph) :</div>
+                                          <div class="" id="wind"></div>
+                                        </div>
+                                        <div class="row justify-content-between mt-3">
+                                          <div class="mr-4">Humidity:</div>
+                                          <div class="" id="humidity"></div>
+                                        </div>
+                      
+                                        <div class="row justify-content-between mt-3">
+                                          <div class="mr-4">Description:</div>
+                                          <div class="" id="description"></div>
+                                        </div>                                                                 
+                                        
+                                                      
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                          
+                            </div>
+                          </div>
+                        </div>  
+                    </div>
+
+            </div> 
+            
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">                
+                        <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary pl-4.5 pr-4.5" data-toggle="modal" data-target="#Timezones">
+                    Timezones
+                    </button>   
+                    <div class="modal fade" id="Timezones" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content" >
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Timezones</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container mt-2">
+                                    <div class="row justify-content-between">
+                                      <div class="mr-4">Timezones:</div>
+                                      <div class="" id="time-zones"></div>
+                                    </div>
+                           
+                                    
+                                  </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                          
+                            </div>
+                          </div>
+                        </div>  
+                    </div>
+            </div> 
+            <!--economy-->
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">                
+              <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary pl-5 pr-5" data-toggle="modal" data-target="#Economy">
+          Economy
+          </button>   
+          <div class="modal fade" id="Economy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" >
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Economy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="container mt-2">
+                          <div class="row justify-content-between">
+                            <div class="mr-4"></div>
+                            <div class="" id="economy"></div>
+                          </div>
+                 
+                          
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                          
+                  </div>
+                </div>
+              </div>  
+          </div>
+  </div> 
 
 
 
@@ -86,74 +311,42 @@
         
         </div>
     </div>
-<!--footer -->
-    <div class="container" mb-5>
-        <div class="row">              
-            <div class="col-md-3 bg-secondary "> 
-                <a class="btn btn-primary" data-toggle="collapse" href="#countryinfo" role="button" aria-expanded="false" aria-controls="countryinfo">
-                    Country 
-                </a>
-                  
-                <div class="collapse" id="countryinfo">
-                    <div class="card card-body">
-                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
-                </div>                      
-                
-            </div>  
 
-            <div class="col-md-3 bg-secondary "> 
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Link with href
-                  </a>
-                  <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
-                  </div>                      
-                
-            </div>  
 
-            <div class="col-md-3 bg-secondary "> 
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Link with href
-                  </a>
-                  <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
-                  </div>                      
-                
-            </div>  
 
-            <div class="col-md-3 bg-secondary "> 
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Link with href
-                  </a>
-                  <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
-                  </div>                      
-                
-            </div>         
+
+
+
+
+
+
+
+            
+
+            
+
+                   
         
-        </div>
-    </div>
+      
 
 
 
-    <!-- <div class="card">
-        <div class="class-header bg-danger" data-toggle="collapse" data-target="#country-info"></div>
-        <p>Country Info: <span id="country-intro"></span></p>
-    </div>   
-    <div class="collapse" id="country-intro">
-        <div class="card-body">
-
-        </div>
-    </div>      -->
     
+    
+<!-- Footer -->
 
+<footer class="footer d-block d-sm-block">
+    <hr />
+    <div class="container">
+      <span class="text-muted">
+        <div class="footer-copyright text-center py-3">
+          The veracity of info on this page cannot be guaranteed. © 2020
+          Copyright:
+          <a href="http://www.nikithanalumachu.co.uk/"> NikithaNalumachu</a>
+        </div>
+      </span>
+    </div>
+  </footer>
     
     
     
