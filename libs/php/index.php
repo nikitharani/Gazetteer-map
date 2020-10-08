@@ -105,7 +105,7 @@ function getDb_data($sql_connection, $table, $currency_code)
    }
 
   // global variables here
-  $display_echo = true;
+  $display_echo = false;
   $table_name = "my_table";
   $myFile = "curr_data.json";
   $useApiData=true;
@@ -119,10 +119,11 @@ function getDb_data($sql_connection, $table, $currency_code)
   // $database='currency_db';
 
   // Heroku credentials
-  $host= 'irkm0xtlo2pcmvvz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com	';
+  $host= 'irkm0xtlo2pcmvvz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com';
   $user='zv0a53oapkf1iys1';
   $password='l1s23a5lxmd3hxjh';
   $database='ru6bg7210tmn6vac';
+  $port = '3306';
 
   $executionStartTime = microtime(true) / 1000;
   if (empty($_REQUEST['curr_code']))
