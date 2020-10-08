@@ -105,7 +105,7 @@ function getDb_data($sql_connection, $table, $currency_code)
    }
 
   // global variables here
-  $display_echo = false;
+  $display_echo = true;
   $table_name = "my_table";
   $myFile = "curr_data.json";
   $useApiData=true;
