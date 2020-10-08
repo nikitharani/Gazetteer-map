@@ -147,6 +147,7 @@ function getDb_data($sql_connection, $table, $currency_code)
     writeMsg("connection established",$display_echo);
 
     // retrive data from database
+    $output['data'] = 0;
     $output['data'] = getDb_data($connect, $table_name, $currency_code);  
     $previous_dateTime = gmdate("Y-m-d H:i:s", $time_database);
     $minutes = getTimeDiffInMins($current_dateTime,$previous_dateTime);
