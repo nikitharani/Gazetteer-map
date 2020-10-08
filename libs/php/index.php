@@ -128,7 +128,7 @@ function getDb_data($sql_connection, $table, $currency_code)
     // $result = file_get_contents($myFile);
 
     //connection to Database
-    $connect = mysqli_connect("localhost", "root", "", "currency_db"); //Connect PHP to MySQL Database
+    $connect = mysqli_connect("3306", "zv0a53oapkf1iys1", "l1s23a5lxmd3hxjh", "ru6bg7210tmn6vac"); //Connect PHP to MySQL Database
     if (!$connect){
       die("Connection failed:".mysql_connect_error());
     }
