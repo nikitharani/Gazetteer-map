@@ -5,7 +5,6 @@
     var timeZones;
     
 
-    var weather_api_key = '93cb5e76b3c67107884e4ce968c5b551';
     var opencage_api_key = '4a8e59ae14f44d888ab86477950f293a';
 
 

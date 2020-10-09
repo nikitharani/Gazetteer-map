@@ -87,8 +87,8 @@ function getDb_data($sql_connection, $table, $currency_code)
   }
 
    // Get currency json from API
-   function getCurrencyApi(){
-    $url='https://openexchangerates.org/api/latest.json?app_id=0f69fa8292e147f7ba4e3d02a4fa52f0';    
+   function getCurrencyApi($api_key){
+    $url='https://openexchangerates.org/api/latest.json?app_id='.$api_key;    
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -111,12 +111,16 @@ function getDb_data($sql_connection, $table, $currency_code)
   $useApiData=true;
   $current_dateTime = gmdate("Y-m-d H:i:s");
   $time_database = 0;
+  $api_key = getenv('currency_api_key', $local_only = TRUE);
+  // $api_key = getenv('weather_api_key', $local_only = TRUE );
+
 
   // // local db credentials 
   // $host= 'localhost';
   // $user='root';
   // $password="";
   // $database='currency_db';
+  // $port = '';
 
   // Heroku credentials
   $host= 'irkm0xtlo2pcmvvz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com';
@@ -158,7 +162,7 @@ function getDb_data($sql_connection, $table, $currency_code)
 
     if($minutes>180){
       //get currency using Api
-      $decode=getCurrencyApi();
+      $decode=getCurrencyApi($api_key);
       //  Delete or update old data
       delDb_data($connect, $table_name); 
       // send entries to database
