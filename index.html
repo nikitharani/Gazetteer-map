@@ -23,13 +23,13 @@
 <body>
         <!-- Navbar -->
 
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <div class="container-fluid">
-            <div class="navbar-header">                
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top ">
+        <div class="container-fluid ">
+            <div class="navbar-header ">                
                 <img src="images/gazatee.jpg" height=40px width=50px/>
                 <a class="navbar-brand" href="test.html" >GaZetteer</a>
                 <select id="countries" class="browser-default custom-select custom-select-sm ">
-                    <option selected>Choose one of the following...</option>
+                  <option value="" disabled selected>Choose your option</option>
                 </select>
             </div>               
         </div>
@@ -37,13 +37,13 @@
      
     <!-- Map -->
 
-    <div class="container">
+    <div class="container map">
         <div class="row">              
         <div class="col-md-12" id="mapid" ></div>          
         </div>
     </div>
 
-    <!--dummy block-->
+    <!--county info block-->
     <div class="container">
         <div class="row">
             <div class="col-lg-5 ">
@@ -117,7 +117,7 @@
         
         
 
-    <!-- test block -->
+    <!-- people block -->
     <div class="container" mb-5>
         <div class="row">              
             <div class="col-lg-3 col-md-3 col-sm-6 col-6">   
@@ -340,8 +340,8 @@
     <div class="container">
       <span class="text-muted">
         <div class="footer-copyright text-center py-3">
-          The veracity of info on this page cannot be guaranteed. © 2020
-          Copyright:
+           
+          Copyright © 2020
           <a href="http://www.nikithanalumachu.co.uk/"> NikithaNalumachu</a>
         </div>
       </span>
