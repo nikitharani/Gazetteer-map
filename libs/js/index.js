@@ -102,7 +102,6 @@
     const countriesList = document.getElementById("countries");
 
 // Event Listeners
-// countriesList.addEventListener("change", event => displayCountryInfo(event.target.value));
 
 countriesList.addEventListener("change", newCountrySelection);
 

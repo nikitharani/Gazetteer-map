@@ -8,26 +8,14 @@
     width:400px;
     
   }
-  /* html, body, .map {
-    height: 100%;
-    overflow: hidden;
-    width: 100%;
-  }
-  #mapid{
-    width: auto; 
-    height: 400px
-  } */
-  
+    
   #flag-container img {
     margin-top:4px;
     display: block;
     width: 100px;
     height: 50px;
   }
- /* .map{
-   margin-top: 90px;
-   height: 100%;
- } */
+ 
  body {
   padding: 0;
   margin: 0;
@@ -48,27 +36,6 @@ html, body, #mapid {
     width:200px;
   }
 }
-/* @media (max-width:375px) {
-
-  .input-small {
-       margin-right: 185px;
-  }
-
-} */
-/* .star{
-  font-size: 1.5em;
-}  */
-/* .modal{
-  display: block !important;
-}
-.modal-dialog{
-    overflow-y: initial !important
-}
-.modal-body{
-height: 250px;
-overflow-y: auto;
-} */
-/* Important part */
 .modal-dialog{
   overflow-y: initial !important
 }
