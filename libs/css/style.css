@@ -8,10 +8,15 @@
     width:400px;
     
   }
-  #mapid{
-    width: 1200px; 
-    height: 400px
+  /* html, body, .map {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
   }
+  #mapid{
+    width: auto; 
+    height: 400px
+  } */
   
   #flag-container img {
     margin-top:4px;
@@ -19,8 +24,57 @@
     width: 100px;
     height: 50px;
   }
- .map{
+ /* .map{
    margin-top: 90px;
- }
+   height: 100%;
+ } */
+ body {
+  padding: 0;
+  margin: 0;
+}
+html, body, #mapid {
+  height: 100%;
+  width: 100vw;
+}
+#mapid{
+  margin-top: 88px;
+  
+}
+@media (max-width:576px){
+  #mapid{
+    margin-top: 130px;
+  }
+  #countries{
+    width:200px;
+  }
+}
+/* @media (max-width:375px) {
+
+  .input-small {
+       margin-right: 185px;
+  }
+
+} */
+/* .star{
+  font-size: 1.5em;
+}  */
+/* .modal{
+  display: block !important;
+}
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+height: 250px;
+overflow-y: auto;
+} */
+/* Important part */
+.modal-dialog{
+  overflow-y: initial !important
+}
+.modal-body{
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
   
  

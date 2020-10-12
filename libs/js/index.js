@@ -39,6 +39,33 @@
         tileSize: 512,
         zoomOffset: -1
         }).  addTo(mymap);
+        //delete
+        L.easyButton( 'fa-search', function(){
+          $("#Background").modal("show");
+        },'Country Introduction').addTo(mymap);
+
+        L.easyButton( 'fa-info-circle', function(){
+          $("#Info").modal("show");
+        },'Country Information').addTo(mymap);
+
+        L.easyButton( 'fa-users', function(){
+          $("#PeopleInfo").modal("show");
+        },'People').addTo(mymap);
+
+        L.easyButton( 'fa-cloud', function(){
+          $("#Weather").modal("show");
+        },'Weather').addTo(mymap);
+
+        L.easyButton( 'fa-coins', function(){
+          $("#Economy").modal("show");
+          $('#Economy').modal('handleUpdate');
+        },'Economy').addTo(mymap);
+
+        L.easyButton( 'fa-clock', function(){
+          $("#Timezones").modal("show");
+        },'Timezones').addTo(mymap);
+
+
     }
 
     function applyCountryBorder(map, countryname) {
@@ -115,6 +142,9 @@ function initialize(countriesData) {
 
   for(i =0; i<countries.length; i++)
   {
+    if(i==0){
+      options+='<option value="" disabled selected>Choose your country</option>';
+    }
     options+=`<option value="${i}">${countries[i].name}</option>`;
   }
 
@@ -179,9 +209,9 @@ function displayCurrentCountryInfo(xmlhttp){
 }
 
 // get countryIntro using ajax call
-function displayCountryIntro(xhttp){    
+function displayCountryIntro(xhttp){  
   var countryIntro = JSON.parse(xhttp.responseText);
-  document.getElementById("country-intro").innerHTML = countryIntro.data.introduction;
+  document.getElementById("IntroCountry").innerHTML = countryIntro.data.introduction;
   document.getElementById("gdp").innerHTML = "$" + (countryIntro.data.gdp.value).toString()+ " billion (in 2017)"; 
   document.getElementById("economy").innerHTML = countryIntro.data.economy;
 
