@@ -3,6 +3,8 @@
     var countries; // will contain "fetched" data
     var latLngBounds;
     var timeZones;
+    var borderLayer;
+    var layerGroup;
     
     //current location     
     if('geolocation' in navigator){
@@ -37,8 +39,16 @@
             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox/streets-v11',
         tileSize: 512,
+        // This map option disables world wrapping.
+        continuousWorld: false,
+        // This option disables loading tiles outside of the world bounds. By default, it is false.
+        noWrap: true,
         zoomOffset: -1
         }).  addTo(mymap);
+
+        layerGroup = new L.LayerGroup();
+        layerGroup.addTo(mymap);
+
         //delete
         L.easyButton( 'fa-search', function(){
           $("#Background").modal("show");
@@ -80,12 +90,13 @@
           })
           .then(function(data) {
             latLngBounds = data[0].boundingbox;      
-            L.geoJSON(data[0].geojson, {
+            borderLayer = L.geoJSON(data[0].geojson, {
               color: "blue",
               weight: 2,
               opacity: 1,
               fillOpacity: 0.0 
             }).addTo(map);
+            layerGroup.addLayer(borderLayer);
             map.fitBounds([
               [parseFloat(latLngBounds[0]),parseFloat(latLngBounds[2])],
               [parseFloat(latLngBounds[1]),parseFloat(latLngBounds[3])]]);
@@ -95,7 +106,7 @@
       }
       function reverseGeocodingWithGoogle(latitude, longitude) 
       {
-        xmlhttp_php("libs/php/getCurrentCountry.php?lat=" + latitude +"&lng="+ longitude, displayCurrentCountryInfo);
+        xmlhttp_php("libs/php/getCurrentCountry.php?lat=" + latitude +"&lng="+ longitude, displayCurrentCountryLocationInfo);
       }     
 
     //get country api
@@ -118,8 +129,9 @@ function newCountrySelection(event) {
     currency_code = countries[indx]["currencies"][0]['code'];
     capital_city = countries[indx].capital;
  
-    mymap.remove();
-    create_map();
+    // Remove previous border
+    layerGroup.removeLayer(borderLayer);
+
     displayCountryInfo(country_alpaname);
     applyCountryBorder(mymap,country_name);
 
@@ -153,6 +165,7 @@ function initialize(countriesData) {
 
 function displayCountryInfo(countryByAlpha3Code) {
   const countryData = countries.find(country => country.alpha3Code === countryByAlpha3Code);
+  // options+=`<option value="">${countryData.name}</option>`;
   document.querySelector("#flag-container img").src = countryData.flag;
   document.querySelector("#flag-container img").alt = `Flag of ${countryData.name}`;  
   document.getElementById("capital").innerHTML = countryData.capital;
@@ -189,7 +202,7 @@ function displayWeatherInfo(xmlhttp){
 }
 
 //get geolocation country from opencage
-function displayCurrentCountryInfo(xmlhttp){
+function displayCurrentCountryLocationInfo(xmlhttp){
   
   var CurrentCountryInfo = JSON.parse(xmlhttp.responseText);
   country_name = CurrentCountryInfo.data.results[0].components.country;
@@ -200,6 +213,13 @@ function displayCurrentCountryInfo(xmlhttp){
 
   applyCountryBorder(mymap, country_name);          
   displayCountryInfo(country_alpaname);
+
+  // Display geolocation country in dropdown
+  var restCountry_name = getCountryName(country_alpaname);
+  var restIndex = getIndex(country_alpaname);
+  var $display_country = $('#countries');
+  $display_country.find('option[value="' + restIndex.toString() + '"]').prependTo(restCountry_name);
+  $display_country.val(restIndex);
 
   xmlhttp_php("libs/php/index.php?curr_code=" + currency_code, displayCurrencyInfo);
   xmlhttp_php("libs/php/getWeatherInfo.php?city=" + capital_city, displayWeatherInfo);
@@ -268,7 +288,32 @@ function getTimeZones(alphaCode)
   return "";
   
 }
+function getCountryName(alphaCode)
+{
+  for(i =0; i<countries.length; i++)
+  {
+    if (!(countries[i].alpha3Code.localeCompare(alphaCode)))
+    {
+      return countries[i].name
+    }
+  }
 
+  return "";
+  
+}
+function getIndex(alphaCode)
+{
+  for(i =0; i<countries.length; i++)
+  {
+    if (!(countries[i].alpha3Code.localeCompare(alphaCode)))
+    {
+      return i
+    }
+  }
+
+  return "";
+  
+}
 
 
   
