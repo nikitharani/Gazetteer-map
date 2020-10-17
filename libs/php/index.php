@@ -107,27 +107,26 @@ function getDb_data($sql_connection, $table, $currency_code)
   // global variables here
   $display_echo = false;
   $table_name = "my_table";
-  $myFile = "curr_data.json";
+  $myFile = "curr_data.json";//delete this line
   $useApiData=true;
   $current_dateTime = gmdate("Y-m-d H:i:s");
   $time_database = 0;
   $api_key = getenv('currency_api_key', $local_only = TRUE);
-  // $api_key = getenv('weather_api_key', $local_only = TRUE );
+  $db_url = getenv('JAWSDB_URL');// heroku_db_url
+  
+  // check if running on heroku or localmachine
+  if ($db_url == false) 
+  {
+    // get local db credentials
+    $db_url = getenv('CURRENCY_DB_URL', $local_only = TRUE);
+  }
 
+  $dbparts = parse_url($db_url);
 
-  // // local db credentials 
-  // $host= 'localhost';
-  // $user='root';
-  // $password="";
-  // $database='currency_db';
-  // $port = '';
-
-  // Heroku credentials
-  $host= 'irkm0xtlo2pcmvvz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com';
-  $user='zv0a53oapkf1iys1';
-  $password='l1s23a5lxmd3hxjh';
-  $database='ru6bg7210tmn6vac';
-  $port = '3306';
+  $host = $dbparts['host'];
+  $user = $dbparts['user'];
+  $password = $dbparts['pass'];
+  $database = ltrim($dbparts['path'],'/');
 
   $executionStartTime = microtime(true) / 1000;
   if (empty($_REQUEST['curr_code']))
