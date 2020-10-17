@@ -4,8 +4,8 @@ GaZetteer is a single page application that is designed to be mobile first, but 
 
 On loading, the system determines the current location of the device and display a map showing the country that the user is currently in. 
 
-![GaZetteer](images/weblayout.png?raw=true)
- 
+![GaZetteer](https://github.com/nikitharani/Gazetteer-map/blob/main/images/weblayout.PNG)
+
 The following Api's are used to retrive the countries information using AJAX call 
 1) Open Weather
 2) Rest Countries
