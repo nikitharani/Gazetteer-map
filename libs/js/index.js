@@ -93,7 +93,7 @@ function newCountrySelection(event) {
     displayCountryInfo(country_alpaname);
     applyCountryBorder(mymap, country_name);
 
-    xmlhttp_php("libs/php/index.php?curr_code=" + currency_code, displayCurrencyInfo);
+    xmlhttp_php("libs/php/getCurrencyInfo.php?curr_code=" + currency_code, displayCurrencyInfo);
     xmlhttp_php("libs/php/getWeatherInfo.php?city=" + capital_city, displayWeatherInfo);
     xmlhttp_php("libs/php/getCountryIntro.php?country=" + country_name, displayCountryIntro);
 
