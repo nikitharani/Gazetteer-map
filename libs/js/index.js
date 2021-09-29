@@ -36,7 +36,7 @@ const countriesList = document.getElementById("countries");
 countriesList.addEventListener("change", newCountrySelection);
 
 //get countries info from Restcountries Api
-fetch("https://restcountries.eu/rest/v2/all")
+fetch("https://restcountries.com/v2/all")
   .then(res => res.json())
   .then(data => initialize(data))
   .catch(err => console.log("Rest Countries fetch Error:", err));
